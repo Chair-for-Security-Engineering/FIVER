@@ -1,0 +1,10 @@
+#source target0 target1 target2...
+and set reset
+nand set reset
+or set reset
+nor set reset
+not set reset
+xor set reset
+xnor set reset
+reg set reset
+buf set reset

@@ -1,0 +1,169 @@
+%%%%%%  library file %%%%%%%
+% usage:
+%
+% Library
+% library_name
+%
+% Type of the cell: Gate/Reg
+%
+% # of its variants
+% variant names
+%
+% name of the cell in BBD program
+%
+% # of inputs
+% input names
+%
+% # of outputs
+% output names
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Library
+NANG45
+
+Gate
+3
+BUF_X1 BUF_X2 BUF_X4
+buf
+1
+A
+1
+Z
+
+
+Gate
+3
+INV_X1 INV_X2 INV_X4
+not
+1
+A
+1
+ZN
+
+Gate
+2
+XNOR2_X1 XNOR2_X2
+xnor
+2
+A B
+1
+ZN
+
+Gate
+2
+XOR2_X1 XOR2_X2
+xor
+2
+A B
+1
+Z
+
+Gate
+2
+NOR2_X1 NOR2_X2
+nor
+2
+A1 A2
+1
+ZN
+
+Gate
+2
+OR2_X1 OR2_X2
+or
+2
+A1 A2
+1
+ZN
+
+Gate
+2
+NAND2_X1 NAND2_X2
+nand
+2
+A1 A2
+1
+ZN
+
+Gate
+1
+AND2_X1
+and
+2
+A1 A2
+1
+ZN
+
+Reg
+1
+DFF_X1
+reg
+2
+D CK
+2
+Q QN
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% for Yosys custom library
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Gate
+2 BUF
+buf
+1 A
+1 Y
+
+Gate
+1 NOT
+not
+1 A
+1 Y
+
+Gate
+1 NAND
+nand
+2 A B
+1 Y
+
+Gate
+1 AND
+and
+2 A B
+1 Y
+
+Gate
+1 OR
+or
+2 A B
+1 Y
+
+Gate
+1 NOR
+nor
+2 A B
+1 Y
+
+Gate
+1 XOR
+xor
+2 A B
+1 Y
+
+Gate
+1 XNOR
+xnor
+2 A B
+1 Y
+
+Reg
+1 DFF
+reg
+2 D C
+1 Q
+
+
+
+
