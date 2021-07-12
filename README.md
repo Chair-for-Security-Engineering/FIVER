@@ -10,7 +10,7 @@ FIVER is a framework written in C++ relying on Reduced Ordered Binary Decision D
 Contact and Support
 ---
 
-Please contact Jan Richter-Brockmann (jan.richter-brockmann@rub.de) if you have any questions, comments, if you found a bug that should be corrected. or if you want to reuse the framework or parts of it for your own research projects. 
+Please contact Jan Richter-Brockmann (jan.richter-brockmann@rub.de) if you have any questions, comments, if you found a bug that should be corrected, or if you want to reuse the framework or parts of it for your own research projects. 
 
 Build Instructions
 ---
@@ -27,7 +27,7 @@ To build FIVER, please follow the instructions below:
 Quick Start
 ---
 
-Build the FIVER framework following the instructions above. FIVER is configured by a configuration file placed in the `config/` folder. You can set the number of cores used by FIVER and the memory used per core (is passed to the CUDD library). Additionally, you can set the path to the library describing the behavior of the logic gates. To analyze a target design, the `circuit` configurations are used. The design can whether be passed as `*.v` file or as `*.nl` file to FIVER (examples can be found in `test/` ). In case you select a Verilog netlist, the module name must be given. The `correction_based` setting is set to `true` in case a correction based countermeasure should be analyzed. The `fault` configurations are used to determine the fault model. Set `interrupt` to `true` in case the analyses should be stopped when an effective fault is found. You will obtain a detailed fault report. 
+Build the FIVER framework following the instructions above. FIVER is configured by a configuration file placed in the `config/` folder. You can set the number of cores used by FIVER and the memory used per core (passed to the CUDD library). Additionally, you can set the path to the library describing the behavior of the logic gates. To analyze a target design, the `circuit` configurations are used. The design description can either be passed as Verilog (`*.v` file) or as list of instructions (`*.nl` file) to FIVER (examples can be found in `test/` directory). In case you select a Verilog netlist, the module name must be given. The `correction_based` setting is set to `true` in case a correction based countermeasure should be analyzed. The `fault` configurations are used to determine the fault model. Set `interrupt` to `true` in case the analyses should be stopped when an effective fault is found. You will obtain a detailed fault report. 
 
 1. `make release` 
 2. `bin/release/verify -c config/verify`
@@ -132,7 +132,7 @@ The configuration file contains a setting to control the complexity reduction (`
 Verilog Annotations
 ---
 
-In case you would like to pass a Verilog netlist to FIVER, the clock signal and control signal need to be annotated. This is required to allow a correct parsing of the netlist to the internally used instruction list (`*.nl` file). The given example shows how the annotations look:
+In case you would like to pass a Verilog netlist to FIVER, the clock signal and control signal need to be annotated. This is required to allow a correct parsing of the netlist to the internally used instruction list (`*.nl` file). The given example shows the syntax of annotations:
 
 ```
   input [63:0] Input;
@@ -171,4 +171,6 @@ Please see `LICENSE` for further license instructions.
 Publications
 ---
 
-J. Richter-Brockmann, A. Rezaei Shahmirzadi, P. Sasdrich, A. Moradi, T. Güneysu (2021): [FIVER - Robust Verification of Countermeasures against Fault Injections](https://eprint.iacr.org/2021/936.pdf). CHES 2021 (preprint)
+
+
+J. Richter-Brockmann, A. Rezaei Shahmirzadi, P. Sasdrich, A. Moradi, T. Güneysu (2021): [FIVER - Robust Verification of Countermeasures against Fault Injections](https://eprint.iacr.org/2021/936.pdf). TCHES 2021 (preprint)
