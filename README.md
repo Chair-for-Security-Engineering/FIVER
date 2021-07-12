@@ -1,6 +1,6 @@
 # FIVER - Fault Injection VERification
 
-This repository contains the source code for the paper *FIVER - Robust Verification of Countermeasures against Fault Injections*.
+This repository contains the source code for the paper [*FIVER - Robust Verification of Countermeasures against Fault Injections*](https://eprint.iacr.org/2021/936.pdf).
 
 Features
 ---
@@ -119,7 +119,15 @@ interrupt           = false
 Check1_CheckInst Red_ToCheckInst
 ```
 
+Configuration Details
+---
 
+The configuration file contains a setting to control the complexity reduction (`reduced_complexity`). Valid values are:
+
+- 0: complexity reduction is disabled (all gates will be considered for fault injections)
+- 1: a naive approach is applied (all registers, input gates to registers, and spreading gates will be considered)
+- 2: applies an aggressive approach (should be used with caution, **no guarantee for correctness**, better use approach 3)
+- 3: conservative approach which was presented and discussed in the related paper (see below)
 
 Verilog Annotations
 ---
@@ -163,4 +171,4 @@ Please see `LICENSE` for further license instructions.
 Publications
 ---
 
-J. Richter-Brockmann, A. Rezaei Shahmirzadi, P. Sasdrich, A. Moradi, T. Güneysu (2021): FIVER - Robust Verification of Countermeasures against Fault Injections. CHES 2021
+J. Richter-Brockmann, A. Rezaei Shahmirzadi, P. Sasdrich, A. Moradi, T. Güneysu (2021): [FIVER - Robust Verification of Countermeasures against Fault Injections](https://eprint.iacr.org/2021/936.pdf). CHES 2021 (preprint)
