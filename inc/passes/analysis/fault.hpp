@@ -3,7 +3,7 @@
  * COMPANY : Ruhr-Universität Bochum, Chair for Security Engineering
  * AUTHOR  : Jan Richter-Brockmann (jan.richter-brockmann@rub.de)
  *           Pascal Sasdrich (pascal.sasdrich@rub.de)
- * DOCUMENT: ---
+ * DOCUMENT: https://eprint.iacr.org/2021/936.pdf
  * -----------------------------------------------------------------
  *
  * Copyright (c) 2020, Jan Richter-Brockmann, Pascal Sasdrich
@@ -87,11 +87,6 @@ namespace verify
             void fault_node(fiver::Circuit &golden, fiver::Circuit &model, Cudd& bddManager, fiver::Gate node, Fault fault);
 
 
-            // These two functions are probably not needed anymore since fault_injection_incremental performs faster
-            // fiver::Circuit fault_injection(fiver::Circuit model, std::vector<fiver::Gate> nodes, std::vector<std::string> faultList);
-            // fiver::Circuit fault_injection_improved(fiver::Circuit model, std::vector<fiver::Gate> nodes, std::vector<std::string> faultList);
-
-
             /**
             * @brief Performs fault injections based on the fiven vector of nodes and faults ind faultList. 
             * @param golden Golden circuit model.
@@ -138,15 +133,6 @@ namespace verify
              */
             void generate_fault_combinations_partly(std::vector<std::vector<fiver::Gate>> &faultLocations, std::vector<std::vector<fiver::Gate>> &permutedFaultLocations, std::vector<std::vector<bool>> &bitmasks, int num_of_faults, int variate, uint64_t start, uint64_t range);
 
-            // /**
-            // * @brief Evaluation function to count effective faults
-            // * @param golden Golden circuit model.
-            // * @param faulty Faulty circuit model.
-            // * @param input_size Number of primary inputs.
-            // * @param outputs Vector with all output gates that should be considered.
-            // */
-            // uint64_t evaluate(fiver::Circuit &golden, fiver::Circuit &faulty, int input_size, std::vector<fiver::Gate> &outputs);
-
             /**
             * @brief Evaluation function to count effective faults for detection-based countermeasures
             * @param golden Golden circuit model.
@@ -178,29 +164,6 @@ namespace verify
             * @param correction TRUE if a correction-based countermeasure is analyzed - FALSE if a detection-based countermeasure is analyzed.
             */
             void fault_verification(std::vector<fiver::Circuit> &golden, std::vector<Cudd> &bddManager, int num_of_faults, int variate, std::map<fiver::GateType, std::vector<verify::passes::analysis::Fault>> &faultMap, std::vector<fiver::Gate> &validFaultLocations, std::vector<fiver::Gate> &reducedFaultLocations,  int reduced_complexity, bool correction, bool interrupt);
-
-
-             /**
-            * @brief Test fault verifaction with stored intermediate result
-            *        Parts of already evaluated DAGs + BDDs are stored and will be reused
-            *        For storing each DAG for n=1 this is actually slower...
-            * @param golden Golden circuit model to be elaborated.
-            * @param num_of_faults Total number of faults that can be injected at the same time.
-            * @param faultMap Gate mapping discribing the fault model.
-            * @param faultLocations Gates that are should be faulted.
-            */           
-            void fault_verification_inter(fiver::Circuit golden, Cudd& bddManager, int num_of_faults, std::map<std::string, std::vector<std::string>> &faultMap, std::vector<fiver::Gate> &faultLocations);
-
-
-            /**
-            * @brief Try to parallize the fault verification
-            *        Currently this is not possible ... maybe the boost library is not thread-safe?
-            * @param golden Golden circuit model to be elaborated.
-            * @param num_of_faults Total number of faults that can be injected at the same time.
-            * @param faultMap Gate mapping discribing the fault model.
-            * @param faultLocations Gates that are should be faulted.
-            */
-            void fault_verification_parallel(fiver::Circuit golden, Cudd& bddManager, int num_of_faults, std::map<std::string, std::vector<std::string>> &faultMap, std::vector<fiver::Gate> &faultLocations);
         }
     }
 }

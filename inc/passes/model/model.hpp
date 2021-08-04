@@ -3,7 +3,7 @@
  * COMPANY : Ruhr-Universität Bochum, Chair for Security Engineering
  * AUTHOR  : Jan Richter-Brockmann (jan.richter-brockmann@rub.de)
  *           Pascal Sasdrich (pascal.sasdrich@rub.de)
- * DOCUMENT: ---
+ * DOCUMENT: https://eprint.iacr.org/2021/936.pdf
  * -----------------------------------------------------------------
  *
  * Copyright (c) 2020, Jan Richter-Brockmann, Pascal Sasdrich

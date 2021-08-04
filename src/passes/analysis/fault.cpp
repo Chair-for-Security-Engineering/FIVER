@@ -3,7 +3,7 @@
  * COMPANY : Ruhr-Universität Bochum, Chair for Security Engineering
  * AUTHOR  : Jan Richter-Brockmann (jan.richter-brockmann@rub.de)
  *           Pascal Sasdrich (pascal.sasdrich@rub.de)
- * DOCUMENT: ---
+ * DOCUMENT: https://eprint.iacr.org/2021/936.pdf
  * -----------------------------------------------------------------
  *
  * Copyright (c) 2020, Jan Richter-Brockmann and Pascal Sasdrich
@@ -139,7 +139,6 @@ void verify::passes::analysis::fault_node(fiver::Circuit &golden, fiver::Circuit
         op2 = source(*(in_edges(node, golden).first+1), golden);
     }
 
-    // TODO: Complete list of functions in elaborate_node()...
     // Generate faulty function for gate
     switch (fault){
         case SET:
@@ -194,7 +193,6 @@ void verify::passes::analysis::fault_injection_incremental(fiver::Circuit &golde
         fault_node(golden, model, bddManager, nodes[it], faultList[it]);
         for(int pos=model[nodes[it]].propagation_path.size()-1; pos >=0; --pos){
             elaborate_node(model, bddManager, (fiver::Gate) model[nodes[it]].propagation_path[pos]);
-            //if(nodes[0] == 256) std::cout << model[nodes[it]].propagation_path[pos] << std::endl;
         }
 
     }
@@ -272,68 +270,6 @@ void verify::passes::analysis::generate_fault_combinations_partly(std::vector<st
     }
 }
 
-// // this function is used to evaluate dulication based countermeasures
-// uint64_t verify::passes::analysis::evaluate(fiver::Circuit &golden, fiver::Circuit &faulty, int input_size, std::vector<fiver::Gate> &outputs){
-//     // // Determine fault coverage for duplication countermeasure
-//     BDD comp, compprime;
-//     int size_original = outputs.size()/2;
-//     // BDD compares original circuit with duplication
-//     comp = (faulty[outputs[0]].function ^ faulty[outputs[size_original]].function);
-//     // BDD compares golden circuit with faulted original and faulted duplication
-//     compprime = (faulty[outputs[0]].function ^ golden[outputs[0]].function) | (faulty[outputs[size_original]].function ^ golden[outputs[0]].function);
-//     // Loop over all output register
-//     for (int out = 1; out < size_original; out++) {
-//         comp |= (faulty[outputs[out]].function ^ faulty[outputs[out+size_original]].function);
-//         compprime |= ((faulty[outputs[out]].function ^ golden[outputs[out]].function) | (faulty[outputs[out+size_original]].function ^ golden[outputs[out]].function));
-//     }
-
-//     // Add up effective fault injections
-//     return (comp ^ compprime).CountMinterm(input_size);
-// }
-
-// // sbox parity
-// uint64_t verify::passes::analysis::evaluate(fiver::Circuit &golden, fiver::Circuit &faulty, int input_size, std::vector<fiver::Gate> &outputs){
-//     // // Determine fault coverage for duplication countermeasure
-//     BDD comp, compprime;
-//     int size_original = outputs.size()-1;
-//     // BDD compares original circuit with duplication
-//     //comp = (faulty[outputs[0]].function ^ golden[outputs[0]].function);
-//     comp = faulty[outputs[0]].function;
-//     // check parity bit
-//     compprime = (faulty[outputs[0]].function ^ golden[outputs[0]].function);
-//     // Loop over all output register
-//     for (int out = 1; out < size_original; out++) {
-//         // comp |= (faulty[outputs[out]].function ^ golden[outputs[out]].function);
-//         comp ^= faulty[outputs[out]].function;
-//         compprime |= (faulty[outputs[out]].function ^ golden[outputs[out]].function);
-//     }
-//     comp ^= faulty[outputs[size_original]].function;
-
-//     // Add up effective fault injections
-//     return (comp ^ compprime).CountMinterm(input_size);
-// }
-
-// CRAFT 1round 1bit
-// uint64_t verify::passes::analysis::evaluate(fiver::Circuit &golden, fiver::Circuit &faulty, int input_size, std::vector<fiver::Gate> &outputs){
-//     // // Determine fault coverage for duplication countermeasure
-//     BDD comp, compprime;
-//     int size_original = outputs.size()-1;
-//     // BDD to store the error flag
-//     comp = faulty[outputs[size_original]].function;
-//     // compare output to golden circuit
-//     compprime = (faulty[outputs[0]].function ^ golden[outputs[0]].function);
-//     for (int out = 1; out < size_original; out++) {
-//         compprime |= (faulty[outputs[out]].function ^ golden[outputs[out]].function);
-//     }
-
-//     // Due to the large number of input combinations, we return the logarithmic result
-//     double err = std::log10((compprime & (!comp)).CountMinterm(input_size));
-//     if (err <= 0){
-//         return 0;   // no effective fault was detected
-//     } else {
-//         return (uint64_t) std::ceil(err);
-//     }
-// }
 
 // Error Detection
 void verify::passes::analysis::evaluate_detection(fiver::Circuit &golden, fiver::Circuit &faulty, int input_size, std::vector<fiver::Gate> &outputs, uint64_t &effective, uint64_t &ineffective, uint64_t &detected, uint64_t &scenarios){
@@ -366,36 +302,6 @@ void verify::passes::analysis::evaluate_detection(fiver::Circuit &golden, fiver:
     scenarios += input_size;
 }
 
-// // Error Detection + TI
-// void verify::passes::analysis::evaluate(fiver::Circuit &golden, fiver::Circuit &faulty, int input_size, std::vector<fiver::Gate> &outputs, uint64_t &effective, uint64_t &ineffective, uint64_t &detected, uint64_t &scenarios){
-//     // // Determine fault coverage for duplication countermeasure
-//     BDD comp, compprime;
-//     int size_original = outputs.size()-3;
-//     // BDD to store the error flag
-//     comp = faulty[outputs[size_original]].function & faulty[outputs[size_original+1]].function & faulty[outputs[size_original+2]].function;
-//     // compare output to golden circuit
-//     compprime = (faulty[outputs[0]].function ^ golden[outputs[0]].function);
-//     for (int out = 1; out < size_original; out++) {
-//         compprime |= (faulty[outputs[out]].function ^ golden[outputs[out]].function);
-//     }
-
-//     // Due to the large number of input combinations, we return the logarithmic result
-//     double err_eff = std::log10((compprime & (comp)).CountMinterm(input_size));
-//     if (err_eff <= 0){
-//         effective += 0;   // no effective fault was detected
-//     } else {
-//         effective += (uint64_t) std::ceil(err_eff);
-//     }
-
-//     double err_det = std::log10((compprime & (!comp)).CountMinterm(input_size));
-//     if (err_det <= 0){
-//         detected += 0;   // no effective fault was detected
-//     } else {
-//         detected += (uint64_t) std::ceil(err_det);
-//     }
-
-//     scenarios += input_size;
-// }
 
 // Error Correction
 void verify::passes::analysis::evaluate_correction(fiver::Circuit &golden, fiver::Circuit &faulty, int input_size, std::vector<fiver::Gate> &outputs, uint64_t &effective, uint64_t &ineffective, uint64_t &detected, uint64_t &scenarios){
@@ -627,8 +533,6 @@ void verify::passes::analysis::fault_verification(std::vector<fiver::Circuit> &g
                                         for(int r=0; r<n; ++r) std::cout  << "(" << GateString[golden[thread_num][faultNodesOld[r]].type] << " -> " << FaultString[faultTypesOld[r]] << ") ";
                                         std::cout << std::endl;
                                         std::cout <<"Each line indicates the variable allocation leading to effective faults. Minus signs (-) indicate a dont_care allocation of the corresponding variable." << std::endl;
-                                        // (faulty[thread_num][outputs[out]].function ^ golden[thread_num][outputs[out]].function).PrintMinterm();
-                                        // (faulty[thread_num][outputs[out]].function ^ golden[thread_num][outputs[out]].function).PrintDebug(inputs.size(), 4);
                                         Cudd_PrintDebug(bddManager[thread_num].getManager(), (faulty[thread_num][outputs[out]].function ^ golden[thread_num][outputs[out]].function).getNode(), inputs.size(), 2);
                                         std::cout << std::endl;
                                         break;

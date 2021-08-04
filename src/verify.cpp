@@ -3,7 +3,7 @@
  * COMPANY : Ruhr-Universität Bochum, Chair for Security Engineering
  * AUTHOR  : Pascal Sasdrich (pascal.sasdrich@rub.de)
  *           Jan Richter-Brockmann (jan.richter-brockmann@rub.de)
- * DOCUMENT: https://eprint.iacr.org/2020/634.pdf
+ * DOCUMENT: https://eprint.iacr.org/2021/936.pdf
  * -----------------------------------------------------------------
  *
  * Copyright (c) 2021, Jan Richter-Brockmann and Pascal Sasdrich
@@ -181,30 +181,6 @@ int main (int argc, char * argv[]) {
         bool interrupt = pt.get<bool>("fault.interrupt");
 
 
-        // // DEBUGGING - print mapping
-        // for(auto it=faultMap.begin(); it!=faultMap.end(); ++it){
-        //     std::cout << it->first << " -> ";
-        //     for(int i=0; i < it->second.size(); i++){
-        //         std::cout << faultMap[it->first][i] << " ";
-        //     }  
-        //     std::cout << std::endl;
-        // }
-        // std::cout << std::endl;
-
-        // // DEBUGGING - print locations
-        // std::cout << "Fault Locations: " << std::endl;
-        // for(int it=0; it < faultLocations.size(); it++){
-        //     std::cout << faultLocations[it] << ", ";
-        // }
-        // std::cout << std::endl;
-
-        // // DEBUGGING - print blacklisted nodes
-        // std::cout << "Blacklisted Nodes: " << std::endl;
-        // for(auto b=blacklist.begin(); b!=blacklist.end(); ++b){
-        //     std::cout << *b << " ";
-        // }
-        // std::cout << std::endl;
-
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,10 +195,6 @@ int main (int argc, char * argv[]) {
         // Reduced fault locations
         std::vector<Gate> reducedFaultLocations;
         switch(reduced_complexity){
-            // case 0:
-            //     std::cout << "No complexity reduction..." << std::endl; 
-            //     reducedFaultLocations = faultLocations;
-            //     break;
             case 1:
                 std::cout << "Complexity reduction: apply naive approach..." << std::endl; 
                 verify::passes::model::get_reduced_fault_location_naive(model[0], faultLocations, reducedFaultLocations);
@@ -237,38 +209,6 @@ int main (int argc, char * argv[]) {
                 break;
         }
         std::cout << std::endl;
-
-        // // DEBUGGING - print reduced fault locations
-        // std::cout << "ReducedFaultLocations (" << reducedFaultLocations.size() <<"): " << std::endl;
-        // for(auto &g : reducedFaultLocations){
-        //     std::cout << g << " ";
-        // }
-        // std::cout << std::endl;
-
-        // for(int i=0; i<get_property(model[0], &GraphContext::stages); ++i){
-        //     std::cout << "Gates in logic stage " << i << std::endl;
-        //     int cnt = 0;
-        //     for(auto &g : reducedFaultLocations){
-        //         if(model[0][g].stage_index == i){
-        //             std::cout << g << " ";
-        //             cnt++;
-        //         }
-        //     }
-        //     std::cout << std::endl << "In total there are " << cnt << " gates" << std::endl << std::endl;
-        // }
-
-        // // DEBUGGING - print propagation paths
-        // std::cout << "Propagation dependencies:" << std::endl;
-        // std::vector<fiver::Gate> sorted; boost::topological_sort(model[0], std::back_inserter(sorted));
-
-        // for (auto node = sorted.rbegin(); node != sorted.rend(); ++node) {
-        //     std::cout << "Node " << *node << ": ";
-        //     for(auto prop=model[0][*node].propagation_path.begin(); prop != model[0][*node].propagation_path.end(); ++prop){
-        //         std::cout << *prop << " ";
-        //     }   
-        //     std::cout << std::endl;
-        // }
-        // std::cout << std::endl;
 
 
         /*

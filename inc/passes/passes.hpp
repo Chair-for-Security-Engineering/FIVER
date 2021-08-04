@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------
  * COMPANY : Ruhr-Universität Bochum, Chair for Security Engineering
  * AUTHOR  : Pascal Sasdrich (pascal.sasdrich@rub.de)
- * DOCUMENT: https://eprint.iacr.org/2020/634.pdf
+ * DOCUMENT: https://eprint.iacr.org/2021/936.pdf
  * -----------------------------------------------------------------
  *
  * Copyright (c) 2020, Pascal Sasdrich
