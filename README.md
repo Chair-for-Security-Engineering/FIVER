@@ -18,11 +18,18 @@ Build Instructions
 To build FIVER, please follow the instructions below:
 
 1. Clone the FIVER repository. 
-2. Download and include the [Boost Graph Library (BGL)](https://www.boost.org/doc/libs/1_73_0/libs/graph/doc/index.html).
-3. Update the `INCLUDES` variable in the FIVER makefile with the path to your copy of BGL.
-4. Download the [CUDD](https://davidkebo.com/source/cudd_versions/cudd-3.0.0.tar.gz) package and follow the instructions in the `README` for installation.
-5. Change directory to the FIVER folder.
-6. `make release`
+2. Download and unpack the [Boost Graph Library (BGL)](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html) library.
+3. `cd boost_X_XX_X`
+4. `./bootstrap.sh --prefix=/path/to/FIVER --with-libraries=program_options`
+5. `./b2 install`
+6. Download and unpack the [CUDD](https://davidkebo.com/source/cudd_versions/cudd-3.0.0.tar.gz) library.
+7. `cd cudd-3.0.0/`
+8. `./configure --prefix=/path/to/FIVER --enable-shared --enable-obj`
+9. `make check`
+10. `make install`
+11. Change directory to the FIVER folder. 
+12. If neccessary, update the `INCLUDES` variable in the FIVER makefile with the path to your copy of BGL (i.e., `/path/to/FIVER/include/` as selected as prefix in step 4).
+13. `make release`
 
 Quick Start
 ---
@@ -171,6 +178,10 @@ Please see `LICENSE` for further license instructions.
 Publications
 ---
 
-
-
 J. Richter-Brockmann, A. Rezaei Shahmirzadi, P. Sasdrich, A. Moradi, T. Güneysu (2021): [FIVER - Robust Verification of Countermeasures against Fault Injections](https://eprint.iacr.org/2021/936.pdf). TCHES 2021 (preprint)
+
+
+Acknowledgment
+---
+
+We would like to thank the anonymous reviewers from the CHES'21 artifact submission committee that provided us with useful comments and suggestions to improve our framework and the instructions to run FIVER.

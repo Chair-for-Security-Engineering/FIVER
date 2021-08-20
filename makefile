@@ -30,7 +30,7 @@ LD_RELEASE_FLAGS	:= -m64
 LD_DEBUG_FLAGS		:= -m64 -fsanitize=address
 
 # EXTERNAL INCLUDES
-INCLUDES			:= "/mnt/c/Program Files/boost/boost_1_73_0"
+INCLUDES			:= "./include/"
 
 # LIBRARIES
 LIBRARIES			:= -lcudd -lboost_program_options -lgomp

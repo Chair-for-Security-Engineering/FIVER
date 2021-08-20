@@ -137,7 +137,20 @@ int main (int argc, char * argv[]) {
         for(int e=0; e<num_cores; ++e){
             fiver::passes::elaboration::elaborate(model[e], bddManager[e]);
         }
-        if (pt.get<int>("general.verbose") > 0) INFO("Elaborate: " + str(get_property(model[0], &GraphContext::register_stages)) + " register stage(s) / " + str(get_property(model[0], &GraphContext::logical_depth)) + " logic layer(s) and " + str(get_property(model[0], &GraphContext::stages)) + " logic stages. \n", start);
+        if (pt.get<int>("general.verbose") > 0) INFO("Elaborate: " + str(get_property(model[0], &GraphContext::register_stages)) + " register stage(s) and " + str(get_property(model[0], &GraphContext::stages)) + " logic stages. \n", start);
+
+        /* Design Properties */
+        unsigned int comb_gates = 0;
+        unsigned int sequ_gates = 0;
+        for (auto gate = vertices(model[0]).first; gate != vertices(model[0]).second; ++gate) {
+            if (model[0][*gate].type == fiver::GateType::REG) 
+                sequ_gates++;
+            else {
+                if(model[0][*gate].type != fiver::GateType::IN && model[0][*gate].type != fiver::GateType::OUT)
+                    comb_gates++;
+            }
+        }
+        if (pt.get<int>("general.verbose") > 0) INFO("Elaborate: " + str(comb_gates) + " combinational gate(s) and " + str(sequ_gates) + " sequential gate(s). \n", start);
 
         /* Get number of faults */
         int num_of_faults = pt.get<int>("fault.number");

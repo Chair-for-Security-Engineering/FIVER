@@ -538,9 +538,7 @@ void verify::passes::analysis::fault_verification(std::vector<fiver::Circuit> &g
                                         break;
                                     }
                                 }
-                                // cancel = true;
                                 }
-                                #pragma omp cancel for
                             } 
                         }
 
@@ -632,9 +630,6 @@ exit:
     std::cout << ">>> found " << ineffective << " ineffective faults" << std::endl;
     std::cout << ">>> found " << detected << " detected faults" << std::endl;
     std::cout << ">>> found " << scenarios << " fault scenarios" << std::endl << std::endl;
-
-    float rate = float(effective)/float(scenarios);
-    std::cout << std::setprecision(6) << ">>> fault rate: " << rate << std::endl;
 
     results << "-- SUMMARY -------------------------------------------------------" << std::endl;
     results << ">>> found " << effective << " effective faults" << std::endl;
